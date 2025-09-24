@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Operation: Rewind | 하민국 포트폴리오</title>
+  <style>
+    :root{
+      --bg:#111; --ink:#eee; --muted:#b8c0cc; --card:#1b1b1b; --line:#2a2a2a; --accent:#9ad;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.65}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    header,main,footer{max-width:1000px;margin:0 auto;padding:20px}
+    header h1{margin:8px 0 4px}
+    header p{margin:0;color:var(--muted)}
+    .hero{display:flex;gap:16px;flex-wrap:wrap;margin:14px 0 8px}
+    .hero img{width:320px;max-width:100%;border-radius:12px;background:#000}
+    .pill{display:inline-block;border:1px solid var(--line);padding:4px 10px;border-radius:999px;color:var(--muted);font-size:13px;margin-right:6px}
+    h2{margin-top:28px;border-top:1px solid var(--line);padding-top:18px}
+    .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+    ul{padding-left:18px;margin:10px 0}
+    .btns a{display:inline-block;margin:6px 8px 0 0;padding:8px 12px;border-radius:10px;background:#1f2937;color:#fff;text-decoration:none}
+    .btns a:hover{background:#334155}
+    .small{color:var(--muted);font-size:13px}
+    .back{display:inline-block;margin:6px 0 12px}
+    .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;font-size:13px;background:#0b0b0b;border:1px solid #222;padding:2px 6px;border-radius:6px}
+    figure{margin:0}
+    figcaption{font-size:12px;color:var(--muted);margin-top:6px}
+  </style>
+</head>
+<body>
+  <header>
+    <a class="back" href="/">← 메인으로</a>
+    <h1>Operation: Rewind</h1>
+    <p>플레이어의 선택에 따라 달라지는 NPC 패턴을 분석해 완벽한 루트를 찾는 루프형 잠입 액션</p>
+
+    <div class="hero">
+      <!-- 썸네일/스크린샷: 실제 이미지로 교체 -->
+      <img src="https://github.com/user-attachments/assets/a4eb4861-7beb-4705-b65c-5027703d29a4" alt="로그인">
+      <img src="https://via.placeholder.com/640x360.png?text=In-Game+01" alt="인게임1">
+      <img src="https://via.placeholder.com/640x360.png?text=In-Game+02" alt="인게임2">
+    </div>
+
+    <div class="small">
+      <span class="pill">Unity 6.0</span>
+      <span class="pill">C#</span>
+      <span class="pill">PC</span>
+      <span class="pill">팀 4인 (프로그래머)</span>
+      <span class="pill">기간: 주말 포함 35일</span>
+    </div>
+  </header>
+
+  <main>
+    <h2>게임 개요</h2>
+    <div class="card">
+      <ul>
+        <li>루프 구조: 실패하면 시간은 초기화되지만, 플레이어는 **NPC 패턴 지식**을 축적하여 최적 루트를 탐색합니다.</li>
+        <li>핵심 재미: <strong>선택→반응→학습</strong>의 반복. 같은 상황도 선택에 따라 NPC의 상태/행동이 달라집니다.</li>
+      </ul>
+    </div>
+
+    <h2>담당 파트</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>이벤트 시스템</h3>
+        <ul>
+          <li>모든 이벤트를 <span class="mono">enum</span>으로 관리하여 오타 방지·가독성 향상</li>
+          <li>구독/구독해제/트리거 3개 함수로 제어하는 중앙 집중식 설계</li>
+          <li>NPC·오브젝트·UI가 직접 연결되지 않고 이벤트로만 통신(느슨한 결합)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>NPC FSM</h3>
+        <ul>
+          <li><span class="mono">NPCFSM</span> 베이스에 <span class="mono">Idle/Look/Walk/Run/Talk/Dead</span> 상태 정의</li>
+          <li>공통 상태/전이를 공유하고, <strong>은행원/경찰/시민</strong> 등 역할별 오버라이드로 행동 확장</li>
+          <li>죽음 애니메이션 종료 후 <span class="mono">Ragdoll</span> 활성화(물리 전환) 처리</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>리플레이 & 스크린샷</h3>
+        <ul>
+          <li>주요 순간을 화면 캡처 → **리스트/큐**에 시간순 저장</li>
+          <li>플레이어 사망 시 저장된 이미지를 순서대로 출력하며 원인 추적을 돕는 리플레이</li>
+          <li>영상 전체 녹화 없이 필요한 순간만 기록해 성능 부담 최소화</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>데이터베이스</h3>
+        <ul>
+          <li>Firebase Realtime Database로 **로그인/진행도/NPC 대사** 관리</li>
+          <li>클라우드 데이터가 UI·대화에 즉시 반영되도록 구조화</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>UI / UX</h3>
+        <ul>
+          <li>로그인/회원가입, NPC 상태표시, 사운드 매니저 등 **필수 HUD** 구성</li>
+          <li>학습을 돕는 피드백: 트리거 결과와 NPC 반응을 즉시 확인 가능</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>코드 스냅샷</h2>
+    <div class="card">
+      <p class="small">핵심 베이스 FSM 구조(요약)</p>
+      <pre class="mono" style="white-space:pre-wrap">
+State { Idle, Look, Walk, Run, Talk, Dead }
+ChangeState(newState) -> 애니메이터 트리거 초기화/설정
+DeadState() -> Dead 애니 후 Ragdoll 전환
+TalkState() -> E 대화 시작 / F 강제 처치, 관련 시스템(Outline/Agent/Chat) 제어
+      </pre>
+    </div>
+
+    <h2>다이어그램(개념)</h2>
+    <div class="card">
+      <figure>
+        <img src="https://via.placeholder.com/1000x420.png?text=Event+%E2%86%92+Manager+%E2%86%92+Dispatch+%28NPC%2FObject%29"
+             alt="이벤트-매니저-디스패치 흐름" style="width:100%;border-radius:8px;background:#000">
+        <figcaption>플레이어 상호작용 → 이벤트 트리거 → 이벤트 매니저 → 구독자(NPC/오브젝트)에 전파</figcaption>
+      </figure>
+    </div>
+
+    <h2>스크린샷</h2>
+    <div class="grid">
+      <img class="card" src="https://via.placeholder.com/800x450.png?text=Login+UI" alt="로그인">
+      <img class="card" src="https://via.placeholder.com/800x450.png?text=NPC+Patrol" alt="NPC 순찰">
+      <img class="card" src="https://via.placeholder.com/800x450.png?text=Replay+Overlay" alt="리플레이">
+    </div>
+
+    <h2>링크</h2>
+    <p class="btns">
+      <a href="https://github.com/mingukHa/HideTeam" target="_blank">📂 GitHub</a>
+      <a href="https://blog.naver.com/gkalsrnr12" target="_blank">📝 개발 블로그</a>
+      <a href="https://youtu.be/XXXXXXXX" target="_blank">▶️ 플레이 영상</a>
+      <a href="https://drive.google.com/XXXXXXXX" target="_blank">🎮 다운로드</a>
+    </p>
+  </main>
+
+  <footer class="small" style="max-width:1000px;margin:24px auto 40px;padding:0 20px;color:#98a2b3">
+    © 2025 Ha Minguk · <a href="https://github.com/mingukHa">github.com/mingukHa</a>
+  </footer>
+</body>
+</html>
