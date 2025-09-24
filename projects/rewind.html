@@ -65,7 +65,7 @@
       <div class="card">
         <h3>이벤트 시스템</h3>
         <ul>
-          <li>모든 이벤트를 <span class="mono">enum</span>으로 관리하여 오타 방지·가독성 향상</li>
+          <li>모든 이벤트를 열거형으로 관리하여 오타 방지·가독성 향상</li>
           <li>구독/구독해제/트리거 3개 함수로 제어하는 중앙 집중식 설계</li>
           <li>NPC·오브젝트·UI가 직접 연결되지 않고 이벤트로만 통신(느슨한 결합)</li>
         </ul>
@@ -73,9 +73,9 @@
       <div class="card">
         <h3>NPC FSM</h3>
         <ul>
-          <li><span class="mono">NPCFSM</span> 베이스에 <span class="mono">Idle/Look/Walk/Run/Talk/Dead</span> 상태 정의</li>
+          <li><span class="mono">NPCFSM</span> 베이스에Idle/Look/Walk/Run/Talk/Dead 상태 정의</li>
           <li>공통 상태/전이를 공유하고, <strong>은행원/경찰/시민</strong> 등 역할별 오버라이드로 행동 확장</li>
-          <li>죽음 애니메이션 종료 후 <span class="mono">Ragdoll</span> 활성화(물리 전환) 처리</li>
+          <li>죽음 애니메이션 종료 후 Ragdoll 활성화(물리 전환) 처리</li>
         </ul>
       </div>
       <div class="card">
